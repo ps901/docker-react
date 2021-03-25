@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  web:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+    - /app/node_modules
+    - .:/app 
+
+  #for test service
+  tests:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    volumes:
+    - /app/node_modules
+    - .:/app 
+
+    command: ["npm", "run", "test"]
+
+  #Creating two services adv: whenever we modify any code, it will respond to both app and test service !!!, so best approach
